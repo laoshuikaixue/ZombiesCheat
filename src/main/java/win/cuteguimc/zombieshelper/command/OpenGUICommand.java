@@ -1,6 +1,6 @@
-package org.polyfrost.example.command;
+package win.cuteguimc.zombieshelper.command;
 
-import org.polyfrost.example.ExampleMod;
+import win.cuteguimc.zombieshelper.ZombiesHelper;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 
@@ -10,12 +10,12 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
  *
  * @see Command
  * @see Main
- * @see ExampleMod
+ * @see ZombiesHelper
  */
-@Command(value = ExampleMod.MODID, description = "Access the " + ExampleMod.NAME + " GUI.")
-public class ExampleCommand {
+@Command(value = ZombiesHelper.MODID, description = "Access the " + ZombiesHelper.NAME + " GUI.")
+public class OpenGUICommand {
     @Main
     private void handle() {
-        ExampleMod.INSTANCE.config.openGui();
+        ZombiesHelper.INSTANCE.config.openGui();
     }
 }

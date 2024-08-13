@@ -1,0 +1,19 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7",
+  "package": "win.cuteguimc.zombieshelper.mixin",
+  "refmap": "mixins.zombieshelper.refmap.json",
+  "injectors": {
+    "maxShiftBy": 5
+  },
+  "client": [
+    "EntityRendererMixin",
+    "MinecraftAccessor",
+    "RenderManagerAccessor"
+  ],
+  "verbose": true,
+  "mixins": [
+    "EntityMixin",
+    "EntityPlayerMixin"
+  ]
+}
