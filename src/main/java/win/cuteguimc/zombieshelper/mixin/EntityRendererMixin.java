@@ -19,6 +19,7 @@ import win.cuteguimc.zombieshelper.utils.Utils;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mixin(EntityRenderer.class)
@@ -31,8 +32,11 @@ public class EntityRendererMixin {
                 Color color = new Color(255, 43, 28);
                 float[] colors = new float[]{(float) color.getRed(), color.getGreen(), color.getBlue()};
                 for (Entity entity : Minecraft.getMinecraft().theWorld.getLoadedEntityList()) {
-                    if (entity instanceof IAnimals && !(entity instanceof EntityVillager) && Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= ZombiesHelperConfig.espRange) {
+                    if (Utils.isTarget(entity) && Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= ZombiesHelperConfig.espRange) {
                         RenderUtils.drawEntityBox(entity, (Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= 8) ? color : targetcolor);
+                    }
+                    if (Utils.isPowerUP(entity)) {
+                        RenderUtils.drawEntityBox(entity, Objects.requireNonNull(Utils.getPowerUPColor(entity)));
                     }
                 }
 
