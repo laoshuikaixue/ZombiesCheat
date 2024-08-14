@@ -5,6 +5,7 @@ import cc.polyfrost.oneconfig.events.event.SendPacketEvent;
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.EnumAction;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
@@ -23,6 +24,7 @@ public class BlockUseEntityListener {
     @Subscribe
     public void onPacketSend(SendPacketEvent event) {
         if (!ZombiesHelperConfig.blockUseEntity) return;
+        if (mc.thePlayer.inventory.getCurrentItem().getItem().getItemUseAction(mc.thePlayer.inventory.getCurrentItem()) != EnumAction.NONE) return;
         Packet packet = event.packet;
         if ((packet instanceof C08PacketPlayerBlockPlacement &&
                 mc.theWorld.getBlockState(((C08PacketPlayerBlockPlacement) packet).getPosition()).getBlock() instanceof BlockChest) ||

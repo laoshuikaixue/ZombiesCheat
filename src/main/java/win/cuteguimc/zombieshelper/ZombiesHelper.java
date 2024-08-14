@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import win.cuteguimc.zombieshelper.command.OpenGUICommand;
 import win.cuteguimc.zombieshelper.config.ZombiesHelperConfig;
-import win.cuteguimc.zombieshelper.listener.AutoSwitchListener;
 import win.cuteguimc.zombieshelper.listener.BlockUseEntityListener;
 import win.cuteguimc.zombieshelper.listener.NoPuncherListener;
 import win.cuteguimc.zombieshelper.listener.RendHudListener;
@@ -35,7 +34,6 @@ public class ZombiesHelper {
         new NoPuncherListener();
         new BlockUseEntityListener();
         new RendHudListener();
-        new AutoSwitchListener();
         CommandManager.INSTANCE.registerCommand(new OpenGUICommand());
     }
 }
