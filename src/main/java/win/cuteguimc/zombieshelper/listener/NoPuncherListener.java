@@ -15,7 +15,7 @@ import win.cuteguimc.zombieshelper.utils.Utils;
 import java.util.Locale;
 
 public class NoPuncherListener {
-    private int lastPuncherTick = -1;
+    private int lastPuncherTick = -9999987;
     private final Minecraft mc = Minecraft.getMinecraft();
 
     public NoPuncherListener() {
@@ -29,6 +29,9 @@ public class NoPuncherListener {
         String message = event.message.getUnformattedTextForChat();
         if (message.toLowerCase(Locale.ROOT).contains("you found the puncher in the lucky chest")) {
             lastPuncherTick = mc.thePlayer.ticksExisted;
+        }
+        if (message.toLowerCase(Locale.ROOT).contains("fight with your teammates against oncoming")) {
+            lastPuncherTick = -9999987;
         }
     }
 
