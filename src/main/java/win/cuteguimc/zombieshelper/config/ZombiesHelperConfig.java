@@ -25,6 +25,31 @@ public class ZombiesHelperConfig extends Config {
     public static OneKeyBind toggleBlockUseEntityKeyBind = new OneKeyBind(UKeyboard.KEY_LEFT);
 
     @Switch(
+            name = "Auto Switch",
+            description = "Auto Switch and Shot"
+    )
+    public static boolean autoSwitch = false;
+
+    @KeyBind(
+            name = "Toggle Auto Switch"
+    )
+    public static OneKeyBind toggleAutoSwitchKeybind = new OneKeyBind(UKeyboard.KEY_V);
+
+    @Slider(
+            name = "First Slot",
+            min = 1f, max = 9f,
+            step = 1
+    )
+    public static float firstSlot = 2;
+
+    @Slider(
+            name = "Second Slot",
+            min = 1f, max = 9f,
+            step = 1
+    )
+    public static float secondSlot = 3;
+
+    @Switch(
             name = "No Puncher"
     )
     public static boolean noPuncher = true;
@@ -62,6 +87,10 @@ public class ZombiesHelperConfig extends Config {
         registerKeyBind(toggleBlockUseEntityKeyBind, () -> {
             blockUseEntity = !blockUseEntity;
             Notifications.INSTANCE.send("Zombies Helper", "Block UseEntity -> " + (blockUseEntity?"On":"Off"));
+        });
+        registerKeyBind(toggleAutoSwitchKeybind, () -> {
+            autoSwitch = !autoSwitch;
+            Notifications.INSTANCE.send("Zombies Helper", "Auto Switch -> " + (autoSwitch?"On":"Off"));
         });
         initialize();
     }
