@@ -4,10 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Timer;
 import org.lwjgl.opengl.GL11;
@@ -19,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glDepthMask;
 
 public class RenderUtils {
     private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
@@ -49,6 +46,38 @@ public class RenderUtils {
                 entityBox.maxX - entity.posX + x + 0.05D,
                 entityBox.maxY - entity.posY + y + 0.15D,
                 entityBox.maxZ - entity.posZ + z + 0.05D
+        );
+
+        glColor(color.getRed(), color.getGreen(), color.getBlue(), 95);
+        drawFilledBox(axisAlignedBB);
+        GlStateManager.resetColor();
+        glDepthMask(true);
+        resetCaps();
+    }
+    public static void drawBiggerEntityBox(final Entity entity, final Color color) {
+        final RenderManagerAccessor renderManager = ((RenderManagerAccessor) mc.invokeGetRenderManager());
+        final Timer timer = mc.getTimer();
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        enableGlCap(GL_BLEND);
+        disableGlCap(GL_TEXTURE_2D, GL_DEPTH_TEST);
+        glDepthMask(false);
+
+        final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * timer.renderPartialTicks
+                - renderManager.getRenderPosX();
+        final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * timer.renderPartialTicks
+                - renderManager.getRenderPosY();
+        final double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * timer.renderPartialTicks
+                - renderManager.getRenderPosZ();
+
+        AxisAlignedBB entityBox = entity.getEntityBoundingBox();
+        AxisAlignedBB axisAlignedBB = new AxisAlignedBB(
+                entityBox.minX - entity.posX + x + 1D,
+                entityBox.minY - entity.posY + y + 1D,
+                entityBox.minZ - entity.posZ + z + 1D,
+                entityBox.maxX - entity.posX + x - 1D,
+                entityBox.maxY - entity.posY + y - 1D,
+                entityBox.maxZ - entity.posZ + z - 1D
         );
 
         glColor(color.getRed(), color.getGreen(), color.getBlue(), 95);
