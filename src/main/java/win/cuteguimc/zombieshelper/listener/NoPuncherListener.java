@@ -27,7 +27,7 @@ public class NoPuncherListener {
         if (mc.theWorld == null || mc.thePlayer == null) return;
         if (!ZombiesHelperConfig.noPuncher) return;
         String message = event.message.getUnformattedTextForChat();
-        if (message.toLowerCase(Locale.ROOT).contains("you found the puncher in the lucky chest")) {
+        if (message.contains("You found The Puncher")) {
             lastPuncherTick = mc.thePlayer.ticksExisted;
         }
         if (message.toLowerCase(Locale.ROOT).contains("fight with your teammates against oncoming")) {
