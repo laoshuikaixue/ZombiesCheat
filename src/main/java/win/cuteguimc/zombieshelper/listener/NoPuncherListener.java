@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C0APacketAnimation;
 import win.cuteguimc.zombieshelper.config.ZombiesHelperConfig;
 import win.cuteguimc.zombieshelper.utils.Utils;
 
@@ -17,6 +18,7 @@ import java.util.Locale;
 public class NoPuncherListener {
     private int lastPuncherTick = -9999987;
     private final Minecraft mc = Minecraft.getMinecraft();
+    private boolean cancelNextSwing = false;
 
     public NoPuncherListener() {
         EventManager.INSTANCE.register(this);
@@ -43,6 +45,13 @@ public class NoPuncherListener {
                 mc.theWorld.getBlockState(((C08PacketPlayerBlockPlacement) packet).getPosition()).getBlock() instanceof BlockChest) ||
                 packet instanceof C02PacketUseEntity && !Utils.isTarget(((C02PacketUseEntity) packet).getEntityFromWorld(mc.theWorld))) &&
                 mc.thePlayer.ticksExisted - lastPuncherTick <= 20*10.2) {
+            event.isCancelled = true;
+            mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()));
+            if (packet instanceof C08PacketPlayerBlockPlacement) {
+                cancelNextSwing = true;
+            }
+        } else if (packet instanceof C0APacketAnimation && cancelNextSwing) {
+            cancelNextSwing = false;
             event.isCancelled = true;
         }
     }

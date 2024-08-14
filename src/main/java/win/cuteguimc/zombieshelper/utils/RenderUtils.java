@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
@@ -16,6 +17,8 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.minecraft.client.renderer.GlStateManager.disableBlend;
+import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
 import static org.lwjgl.opengl.GL11.*;
 
 public class RenderUtils {
@@ -216,5 +219,33 @@ public class RenderUtils {
         worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
         worldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
         tessellator.draw();
+    }
+
+    private final static Frustum frustum = new Frustum();
+
+    public static boolean isInViewFrustrum(Entity entity) {
+        return isInViewFrustrum(entity.getEntityBoundingBox()) || entity.ignoreFrustumCheck;
+    }
+
+    public static boolean isInViewFrustrum(AxisAlignedBB bb) {
+        Entity current = Minecraft.getMinecraft().getRenderViewEntity();
+        frustum.setPosition(current.posX, current.posY, current.posZ);
+        return frustum.isBoundingBoxInFrustum(bb);
+    }
+
+    public static void start2D() {
+        glEnable(3042);
+        glDisable(3553);
+        glBlendFunc(770, 771);
+        glEnable(2848);
+    }
+
+    public static void stop2D() {
+        glEnable(3553);
+        glDisable(3042);
+        glDisable(2848);
+        enableTexture2D();
+        disableBlend();
+        glColor4f(1, 1, 1, 1);
     }
 }

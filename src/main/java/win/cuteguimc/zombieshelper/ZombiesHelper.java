@@ -1,13 +1,14 @@
 package win.cuteguimc.zombieshelper;
 
+import cc.polyfrost.oneconfig.events.event.InitializationEvent;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import win.cuteguimc.zombieshelper.command.OpenGUICommand;
 import win.cuteguimc.zombieshelper.config.ZombiesHelperConfig;
-import cc.polyfrost.oneconfig.events.event.InitializationEvent;
-import net.minecraftforge.fml.common.Mod;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import win.cuteguimc.zombieshelper.listener.BlockUseEntityListener;
 import win.cuteguimc.zombieshelper.listener.NoPuncherListener;
+import win.cuteguimc.zombieshelper.listener.RendHudListener;
 
 /**
  * The entrypoint of the Example Mod that initializes it.
@@ -32,6 +33,7 @@ public class ZombiesHelper {
         config = new ZombiesHelperConfig();
         new NoPuncherListener();
         new BlockUseEntityListener();
+        new RendHudListener();
         CommandManager.INSTANCE.registerCommand(new OpenGUICommand());
     }
 }
