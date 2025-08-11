@@ -25,29 +25,33 @@ public class ZombiesHelperConfig extends Config {
     public static OneKeyBind toggleBlockUseEntityKeyBind = new OneKeyBind(UKeyboard.KEY_LEFT);
 
     @Switch(
-            name = "Auto Switch",
-            description = "Auto Switch and Shot"
+            name = "Aim Bot",
+            description = "Auto Aim"
     )
-    public static boolean autoSwitch = false;
+    public static boolean aimBot = false;
 
     @KeyBind(
-            name = "Toggle Auto Switch"
+            name = "Toggle Aim Bot"
     )
-    public static OneKeyBind toggleAutoSwitchKeybind = new OneKeyBind(UKeyboard.KEY_V);
+    public static OneKeyBind toggleAimBotKeybind = new OneKeyBind(UKeyboard.KEY_V);
 
     @Slider(
-            name = "First Slot",
-            min = 1f, max = 9f,
-            step = 1
+            name = "Turn Speed",
+            min = 0.1f, max = 50f
     )
-    public static float firstSlot = 2;
+    public static float turnSpeed = 1.5f;
 
     @Slider(
-            name = "Second Slot",
-            min = 1f, max = 9f,
-            step = 1
+            name = "Predict",
+            min = 0f, max = 10f
     )
-    public static float secondSlot = 3;
+    public static float predict = 0.5f;
+
+    @Switch(
+            name = "Auto Revive",
+            description = "Automatically revives players"
+    )
+    public static boolean autoRevive = false;
 
     @Switch(
             name = "No Puncher"
@@ -88,9 +92,9 @@ public class ZombiesHelperConfig extends Config {
             blockUseEntity = !blockUseEntity;
             Notifications.INSTANCE.send("Zombies Helper", "Block UseEntity -> " + (blockUseEntity?"On":"Off"));
         });
-        registerKeyBind(toggleAutoSwitchKeybind, () -> {
-            autoSwitch = !autoSwitch;
-            Notifications.INSTANCE.send("Zombies Helper", "Auto Switch -> " + (autoSwitch?"On":"Off"));
+        registerKeyBind(toggleAimBotKeybind, () -> {
+            aimBot = !aimBot;
+            Notifications.INSTANCE.send("Zombies Helper", "Aim Bot -> " + (aimBot?"On":"Off"));
         });
         initialize();
     }

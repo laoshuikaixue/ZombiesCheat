@@ -2,8 +2,9 @@ package win.cuteguimc.zombieshelper.utils;
 
 import kotlin.text.Regex;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.IAnimals;
 
@@ -14,7 +15,7 @@ public class Utils {
     private static Regex regex = new Regex("(?:§.)*(SHOPPING SPREE|DOUBLE GOLD|MAX AMMO|INSTA KILL|CARPENTER|BONUS GOLD)");
 
     public static boolean isTarget(Entity entity) {
-        return entity instanceof IAnimals && !(entity instanceof EntityVillager);
+        return entity instanceof IAnimals && !(entity instanceof EntityWither) && entity instanceof EntityLivingBase && !(entity instanceof EntityVillager) && !entity.isDead && ((EntityLivingBase) entity).getHealth() > 0;
     }
 
     public static boolean isPowerUP(Entity entity) {

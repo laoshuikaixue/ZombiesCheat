@@ -29,7 +29,7 @@ public class BlockUseEntityListener {
                 mc.theWorld.getBlockState(((C08PacketPlayerBlockPlacement) packet).getPosition()).getBlock() instanceof BlockChest) ||
                 packet instanceof C02PacketUseEntity && !Utils.isTarget(((C02PacketUseEntity) packet).getEntityFromWorld(mc.theWorld))) {
             event.isCancelled = true;
-            if (mc.thePlayer.inventory.getCurrentItem().getItem().getItemUseAction(mc.thePlayer.inventory.getCurrentItem()) != EnumAction.NONE) {
+            if (mc.thePlayer.inventory.getCurrentItem().getItem().getItemUseAction(mc.thePlayer.inventory.getCurrentItem()) == EnumAction.NONE) {
                 mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()));
                 if (packet instanceof C08PacketPlayerBlockPlacement) {
                     cancelNextSwing = true;
