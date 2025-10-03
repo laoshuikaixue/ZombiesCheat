@@ -80,6 +80,17 @@ public class ZombiesHelperConfig extends Config {
     )
     public static float espRange = 50f;
 
+    @Switch(
+            name = "Auto Send",
+            description = "Automatically sends packets when not holding sword or book"
+    )
+    public static boolean autoSend = false;
+
+    @KeyBind(
+            name = "Toggle Auto Send"
+    )
+    public static OneKeyBind toggleAutoSendKeybind = new OneKeyBind(UKeyboard.KEY_B);
+
     @HUD(
             name = "Nearby Entity HUD",
             category = "NEHUD"
@@ -95,6 +106,10 @@ public class ZombiesHelperConfig extends Config {
         registerKeyBind(toggleAimBotKeybind, () -> {
             aimBot = !aimBot;
             Notifications.INSTANCE.send("Zombies Helper", "Aim Bot -> " + (aimBot?"On":"Off"));
+        });
+        registerKeyBind(toggleAutoSendKeybind, () -> {
+            autoSend = !autoSend;
+            Notifications.INSTANCE.send("Zombies Helper", "Auto Send -> " + (autoSend?"On":"Off"));
         });
         initialize();
     }

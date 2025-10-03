@@ -34,6 +34,7 @@ public class ZombiesHelper {
         new RendHudListener();
         new AimBotListener();
         new AutoReviveListener();
+        new AutoSendListener();
         CommandManager.INSTANCE.registerCommand(new OpenGUICommand());
     }
 }
